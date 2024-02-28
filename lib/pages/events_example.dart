@@ -1,6 +1,8 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -20,6 +22,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+  List<Event> eventList = [];
 
   @override
   void initState() {
@@ -125,6 +128,21 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             },
           ),
           const SizedBox(height: 8.0),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                eventList.add(Event("Title 1", "Sub Title 1"));
+                addToEventLIst(_selectedDay!, eventList);
+              });
+            },
+            child: const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Icon(
+                Icons.add,
+                size: 22,
+              ),
+            ),
+          ),
           Expanded(
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
@@ -146,7 +164,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('${value[index].title}'),
+                            Text('${value[index].title} ${index + 1}'),
                             SizedBox(
                               height: 5,
                             ),
